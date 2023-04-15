@@ -181,13 +181,8 @@ int CheckLicenseWord(unsigned machineGuidWord, unsigned licenseWord)
 	if (setBits < 16)
 		return 1;
 
-	int isEvenNumber = licenseWord & 1;
-	if (machineGuidWord % 37 == 0)
-	{
-		return !isEvenNumber;
-	}
-
-	return isEvenNumber;
+	unsigned absValue = abs(machineGuidWord - licenseWord);
+	return absValue % 4 != 0;
 }
 
 int LicenseCheck()
