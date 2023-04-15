@@ -808,60 +808,6 @@ void RevealValue(int y, int x)
 	else return;
 }
 
-void RerollBombs(int y, int x)
-{
-	if (Field[y][x] == '*')
-	{
-		Field[y][x] = 48;
-
-		if (Field[y - 1][x - 1] != '*') Field[y - 1][x - 1]--; else Field[y][x]++;
-		if (Field[y - 1][x] != '*') Field[y - 1][x]--;	else Field[y][x]++;
-		if (Field[y - 1][x + 1] != '*') Field[y - 1][x + 1]--;	else Field[y][x]++;
-		if (Field[y][x + 1] != '*') Field[y][x + 1]--;	else Field[y][x]++;
-		if (Field[y + 1][x + 1] != '*') Field[y + 1][x + 1]--;	else Field[y][x]++;
-		if (Field[y + 1][x] != '*') Field[y + 1][x]--;	else Field[y][x]++;
-		if (Field[y + 1][x - 1] != '*') Field[y + 1][x - 1]--;	else Field[y][x]++;
-		if (Field[y][x - 1] != '*') Field[y][x - 1]--;	else Field[y][x]++;
-
-	again:
-
-		int randy = rand() % FieldY + 1;
-		int randx = rand() % FieldX + 1;
-		if (x == randx && y == randy)
-		{
-			Field[randy][randx] = 48;
-			goto again;
-		}
-
-		if (Field[randy][randx] == '*')
-		{
-			Field[randy][randx] = 48;
-			goto again;
-		}
-		else
-		{
-			Field[randy][randx] = '*';
-			randy--; randx--;
-			if (Field[randy][randx] != '*') Field[randy][randx]++;
-			randx++;
-			if (Field[randy][randx] != '*') Field[randy][randx]++;
-			randx++;
-			if (Field[randy][randx] != '*') Field[randy][randx]++;
-			randy++;
-			if (Field[randy][randx] != '*') Field[randy][randx]++;
-			randy++;
-			if (Field[randy][randx] != '*') Field[randy][randx]++;
-			randx--;
-			if (Field[randy][randx] != '*') Field[randy][randx]++;
-			randx--;
-			if (Field[randy][randx] != '*') Field[randy][randx]++;
-			randy--;
-			if (Field[randy][randx] != '*') Field[randy][randx]++;
-			randx++;
-		}
-	}
-}
-
 void Move()
 {
 	int x = 1;
@@ -870,7 +816,6 @@ void Move()
 	int pre_y = 0;
 	int pre_pre_x = -1;
 	int pre_pre_y = -1;
-	int try_ = 0;
 	FlagCount = 0;
 	GameOver = 0;
 	WrongGuess = 0;
@@ -1178,13 +1123,6 @@ void Move()
 				GoToXY(2, 4);
 				printf("Flag Left : %3d", MineCount - FlagCount);
 			}
-		}
-
-		try_++;
-
-		if (try_ == 1)
-		{
-			RerollBombs(y, x);
 		}
 
 		if (Flag[y][x] == 0)RevealValue(y, x);
