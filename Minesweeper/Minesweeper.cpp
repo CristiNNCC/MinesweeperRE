@@ -181,7 +181,7 @@ int CheckLicenseWord(unsigned machineGuidWord, unsigned licenseWord)
 	if (setBits < 16)
 		return 1;
 
-	unsigned absValue = abs(machineGuidWord - licenseWord);
+	unsigned absValue = abs(static_cast<int>(machineGuidWord - licenseWord));
 	return absValue % 4 != 0;
 }
 
